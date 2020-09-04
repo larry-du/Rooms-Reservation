@@ -2,11 +2,11 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
     <p>
-      For a guide and recipes on how to configure / customize this project,<br />
-      check out the
+      For a guide and recipes on how to configure / customize this project,
+      <br />check out the
       <a href="https://cli.vuejs.org" target="_blank" rel="noopener"
         >vue-cli documentation</a
-      >.
+      >
     </p>
     <h3>Installed CLI Plugins</h3>
     <ul>
@@ -103,17 +103,23 @@
 </template>
 
 <script>
-export default {
-  name: "HelloWorld",
-  props: {
-    msg: String
-  }
-};
+// export default {
+//   name: "HelloWorld",
+//   props: {
+//     msg: String,
+//     test: {
+//       type: Array,
+//       required: true
+//     }
+//   }
+// };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+// @import "../assets/scss/main.scss";
 h3 {
+  // font-size: $titleFont;
   margin: 40px 0 0;
 }
 ul {
