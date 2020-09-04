@@ -48,13 +48,13 @@
 
 <script>
 export default {
-  name: "companyContact",
-  props: {
-    allRooms: {
-      type: Array,
-      required: true
-    }
-  }
+  name: "companyContact"
+  // props: {
+  //   allRooms: {
+  //     type: Array,
+  //     required: true
+  //   }
+  // }
 };
 </script>
 
@@ -64,6 +64,7 @@ export default {
   height: 148px;
   margin: 0 auto;
   background-color: $gray-100;
+  font-family: $title-font-family;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -114,7 +115,10 @@ export default {
     border-left: 1px solid white;
     margin-left: 31px;
     padding-left: 31px;
-    div + div {
+    & svg {
+      margin-right: 13px;
+    }
+    & div + div {
       margin-top: 13px;
     }
     & .mail a:hover {
