@@ -76,15 +76,15 @@ export default {
   color: $white;
   font-size: $product-title-size;
   & .social_media {
-    font-size: 0;
+    display: flex;
   }
   & .social_media a + a {
-    margin-left: 13px;
+    margin-left: 5px;
+    @media (min-width: 768px) {
+      margin-left: 13px;
+    }
   }
 
-  & .social_contact {
-    display: inline-block;
-  }
   & .social_contact {
     font-size: 21px;
     color: $white;
@@ -100,8 +100,11 @@ export default {
   }
   & .contact_us {
     border-left: 1px solid white;
-    margin-left: 31px;
     padding-left: 31px;
+    margin-left: 15px;
+    @media (min-width: 768px) {
+      margin-left: 31px;
+    }
     & svg {
       margin-right: 13px;
     }

@@ -9,7 +9,7 @@
         <img :src="roomInfo[2].imageUrl" alt />
       </div>
     </header>
-    <div class="log">WhiteSpace</div>
+    <h1 class="log" title="WhiteSpace">WhiteSpace</h1>
   </div>
 </template>
 
@@ -52,6 +52,9 @@ export default {
 .log {
   width: 150px;
   height: 43px;
+  line-height: 43px;
+  font-size: $detail-log-title-size;
+  font-family: $title-font-family;
   background-color: $gray-100;
   border: 1px solid;
   position: absolute;

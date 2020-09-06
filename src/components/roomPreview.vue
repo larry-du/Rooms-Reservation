@@ -1,5 +1,5 @@
 <template>
-  <b-col sm="4" class="room_detial">
+  <b-col sm="6" md="4" class="room_detial">
     <b-card
       class="room_preview"
       no-body
