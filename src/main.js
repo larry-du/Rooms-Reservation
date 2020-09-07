@@ -13,6 +13,8 @@ import "./assets/scss/reset/reset.scss";
 //fontAwesome
 import { library } from "@fortawesome/fontawesome-svg-core";
 // import { faInstagram, faFacebookSquare } from "@fortawesome/free-brands-svg-icons";
+
+// import VCalendar from 'v-calendar';
 import {
   FontAwesomeIcon,
   FontAwesomeLayers,
@@ -38,7 +40,10 @@ import {
   faBaby,
   faConciergeBell,
   faCouch,
-  faDog
+  faDog,
+  faChevronLeft,
+  faChevronRight
+
 } from "@fortawesome/free-solid-svg-icons";
 
 Vue.config.productionTip = false;
@@ -59,12 +64,15 @@ library.add(
   faHome,
   faWifi,
   faMountain,
-  faUtensils
-);
+  faUtensils,
+  faChevronLeft,
+  faChevronRight
+,);
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.component("font-awesome-layers", FontAwesomeLayers);
 Vue.component("font-awesome-layers-text", FontAwesomeLayersText);
+
 Vue.use(BootstrapVue);
 
 new Vue({
