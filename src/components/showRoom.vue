@@ -32,7 +32,7 @@ export default {
 }
 
 .big {
-  flex: 2 0 0;
+  flex: 3 0 0;
   & img {
     width: 100%;
     height: 596px;
@@ -41,11 +41,15 @@ export default {
 }
 
 .small {
+  display: none;
   flex: 1 0 0;
   & img {
     width: 100%;
     height: 298px;
     object-fit: cover;
+  }
+  @media (min-width: 576px) {
+    display: block;
   }
 }
 

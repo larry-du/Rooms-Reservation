@@ -27,11 +27,40 @@ import {
 import {
   faPhoneAlt,
   faEnvelope,
-  faHome
+  faHome,
+  faWifi,
+  faMountain,
+  faUtensils,
+  faWind,
+  faSmokingBan,
+  faGlassMartiniAlt,
+  faColumns,
+  faBaby,
+  faConciergeBell,
+  faCouch,
+  faDog
 } from "@fortawesome/free-solid-svg-icons";
 
 Vue.config.productionTip = false;
-library.add(faInstagram, faFacebookSquare, faPhoneAlt, faEnvelope, faHome);
+
+library.add(
+  faDog,
+  faCouch,
+  faConciergeBell,
+  faBaby,
+  faColumns,
+  faGlassMartiniAlt,
+  faSmokingBan,
+  faInstagram,
+  faFacebookSquare,
+  faPhoneAlt,
+  faEnvelope,
+  faWind,
+  faHome,
+  faWifi,
+  faMountain,
+  faUtensils
+);
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.component("font-awesome-layers", FontAwesomeLayers);

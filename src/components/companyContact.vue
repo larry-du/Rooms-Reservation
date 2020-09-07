@@ -7,19 +7,35 @@
       <div class="contact">
         <div class="social_media">
           <a href="##" class="social_contact">
-            <font-awesome-icon :icon="['fab', 'instagram']" fixed-width size="lg" />
+            <font-awesome-icon
+              :icon="['fab', 'instagram']"
+              fixed-width
+              size="lg"
+            />
           </a>
           <a href="##" class="social_contact">
-            <font-awesome-icon :icon="['fab', 'facebook-square']" fixed-width size="lg" />
+            <font-awesome-icon
+              :icon="['fab', 'facebook-square']"
+              fixed-width
+              size="lg"
+            />
           </a>
         </div>
         <div class="contact_us">
           <div class="telephone">
-            <font-awesome-icon :icon="['fas', 'phone-alt']" fixed-width size="lg" />
+            <font-awesome-icon
+              :icon="['fas', 'phone-alt']"
+              fixed-width
+              size="lg"
+            />
             <span>02-17264937</span>
           </div>
           <div class="mail">
-            <font-awesome-icon :icon="['fas', 'envelope']" fixed-width size="lg" />
+            <font-awesome-icon
+              :icon="['fas', 'envelope']"
+              fixed-width
+              size="lg"
+            />
             <a href="##">whitespace@whitespace.com.tw</a>
           </div>
           <div class="adress">
