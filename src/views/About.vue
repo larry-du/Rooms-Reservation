@@ -16,10 +16,11 @@
       <!-- <calendar class="calendar"></calendar> -->
       <div class="calendar_area">
         <calendar></calendar>
-        <button>預約時段</button>
+        <button @click="openBookingPage=true">預約時段</button>
       </div>
     </div>
     <lightBox v-show="openLightBox" :roomInfo="getAllRooms"></lightBox>
+    <bookingPage v-show="openBookingPage"></bookingPage>
   </div>
 </template>
 
@@ -28,19 +29,36 @@ import showRoom from "@/components/showRoom.vue";
 import detailRoomInfo from "@/components/detailRoomInfo.vue";
 import calendar from "@/components/calendar.vue";
 import lightBox from "@/components/lightBox.vue";
+import bookingPage from "@/components/bookingPage.vue";
 import { mapGetters } from "vuex";
 export default {
   name: "About",
+  mounted() {
+    let self = this;
+    document.addEventListener("keyup", function(event) {
+      if (event.key === "Escape") {
+        self.openLightBox = false;
+      }
+    });
+  },
   data() {
     return {
-      openLightBox: null
+      openLightBox: null,
+      openBookingPage: null
     };
   },
   components: {
     showRoom,
     detailRoomInfo,
     calendar,
-    lightBox
+    lightBox,
+    bookingPage
+  },
+  methods: {
+    test() {
+      console.log("aaa");
+      this.openLightBox = false;
+    }
   },
   computed: {
     ...mapGetters(["getAllRooms", "getRoom"])

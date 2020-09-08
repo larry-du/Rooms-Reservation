@@ -37,6 +37,9 @@ export default {
       this.index = this.index - 1;
       if (this.index < 0) this.index = this.roomInfo.length - 1;
     }
+    // test(e) {
+    //   console.log(e);
+    // }
   },
   computed: {
     getImage() {
