@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <showRoom :roomInfo="getRoom"></showRoom>
+    <showRoom @open-light-box="openLightBox = true" :roomInfo="getRoom"></showRoom>
     <div class="reservation">
       <detailRoomInfo :roomInfo="getRoom" class="detail_room_info"></detailRoomInfo>
       <div class="room_price">
@@ -19,7 +19,7 @@
         <button>預約時段</button>
       </div>
     </div>
-    <lightBox class="test" :roomInfo="getAllRooms"></lightBox>
+    <lightBox v-show="openLightBox" :roomInfo="getAllRooms"></lightBox>
   </div>
 </template>
 
@@ -28,10 +28,14 @@ import showRoom from "@/components/showRoom.vue";
 import detailRoomInfo from "@/components/detailRoomInfo.vue";
 import calendar from "@/components/calendar.vue";
 import lightBox from "@/components/lightBox.vue";
-// import calendar from "@/components/calendar.vue";
 import { mapGetters } from "vuex";
 export default {
   name: "About",
+  data() {
+    return {
+      openLightBox: null
+    };
+  },
   components: {
     showRoom,
     detailRoomInfo,

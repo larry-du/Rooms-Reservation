@@ -1,6 +1,6 @@
 <template>
   <div class="light_box">
-    <div class="arrow_left">
+    <div class="arrow_left" @click="prev">
       <font-awesome-icon :icon="['fas', 'chevron-left']" />
     </div>
     <div class="img_box">
@@ -10,7 +10,7 @@
         <span>{{index+1}}/{{roomInfo.length}}</span>
       </div>
     </div>
-    <div class="arrow_right">
+    <div class="arrow_right" @click="next">
       <font-awesome-icon :icon="['fas', 'chevron-right']" />
     </div>
   </div>
@@ -26,6 +26,16 @@ export default {
     roomInfo: {
       type: Array,
       required: true
+    }
+  },
+  methods: {
+    next() {
+      this.index = this.index + 1;
+      if (this.index > this.roomInfo.length - 1) this.index = 0;
+    },
+    prev() {
+      this.index = this.index - 1;
+      if (this.index < 0) this.index = this.roomInfo.length - 1;
     }
   },
   computed: {
@@ -54,10 +64,12 @@ export default {
   & .arrow_left {
     color: $white;
     margin-right: 81px;
+    cursor: pointer;
   }
   & .arrow_right {
     color: $white;
     margin-left: 81px;
+    cursor: pointer;
   }
 }
 .img_box {
@@ -70,6 +82,9 @@ export default {
     display: flex;
     justify-content: space-between;
     font-size: 16px;
+    color: $white;
+    letter-spacing: 1.67px;
+    margin-top: 19px;
   }
 }
 </style>
