@@ -22,6 +22,10 @@ export default {
 .calendar {
   & .vdp-datepicker__calendar {
     width: 100%;
+    padding: 10px 11px 24px 22px;
+    @media (min-width: 768px) {
+      padding: 30px 31px 44px 42px;
+    }
   }
   & .vdp-datepicker__calendar {
     border: 0;
@@ -31,6 +35,5 @@ export default {
       pointer-events: none;
     }
   }
-}
-</style
+}</style
 >>

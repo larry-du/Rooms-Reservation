@@ -5,18 +5,33 @@
         <p class="title">預約時段</p>
         <div class="your_name">
           <label for="name">姓名</label>
-          <input type="text" id="name" />
+          <input type="text" id="name" :value="data.name" @input="checkNameFormat($event)" />
         </div>
         <div class="your_number">
           <label for="phone">電話</label>
-          <input type="text" id="phone" />
+          <input
+            type="text"
+            id="phone"
+            :value="data.phone"
+            @input="$emit('update:order',{...data,phone:$event.target.value})"
+          />
         </div>
         <div class="appointment_date">
           <span>預約起迄</span>
           <div class="date">
-            <input type="date" class="star" />
+            <input
+              type="date"
+              class="star"
+              :value="data.starTime"
+              @input="$emit('update:order',{...data,starTime:$event.target.value})"
+            />
             <span>~</span>
-            <input type="date" class="end" />
+            <input
+              type="date"
+              class="end"
+              :value="data.endTime"
+              @input="$emit('update:order',{...data,endTime:$event.target.value})"
+            />
           </div>
         </div>
       </div>
@@ -34,7 +49,7 @@
         <span>= NT.2850</span>
       </div>
       <div class="check_state">
-        <button class="cancel">取消</button>
+        <button class="cancel" @click="$emit('cancel-order')">取消</button>
         <button class="save">確定預約</button>
       </div>
     </div>
@@ -43,7 +58,22 @@
 
 <script>
 export default {
-  name: "bookingPage"
+  name: "bookingPage",
+  props: {
+    data: {
+      type: Object,
+      required: true
+    }
+  },
+  methods: {
+    checkNameFormat(event) {
+      const reg = /^[\u4e00-\u9fa5_A-z]+$/;
+      const currentText = event.target.value;
+      if (currentText.match(reg)) {
+        this.$emit("update:order", { ...this.data, name: currentText });
+      }
+    }
+  }
 };
 </script>
 
@@ -65,10 +95,6 @@ export default {
 .booking {
   width: 485/1200 * 100%;
   margin: 0 auto;
-  //   display: flex;
-  //   flex-direction: column;
-  //   justify-content: center;
-  //   align-items: center;
   padding-top: 27px;
   padding-bottom: 34px;
   background-color: white;
@@ -191,4 +217,5 @@ export default {
     background-color: #484848;
   }
 }
-</style>>
+</style
+>>

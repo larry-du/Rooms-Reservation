@@ -43,7 +43,6 @@ import {
   faDog,
   faChevronLeft,
   faChevronRight
-
 } from "@fortawesome/free-solid-svg-icons";
 
 Vue.config.productionTip = false;
@@ -67,7 +66,7 @@ library.add(
   faUtensils,
   faChevronLeft,
   faChevronRight
-,);
+);
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.component("font-awesome-layers", FontAwesomeLayers);

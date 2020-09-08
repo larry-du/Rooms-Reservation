@@ -5,22 +5,26 @@
       <detailRoomInfo :roomInfo="getRoom" class="detail_room_info"></detailRoomInfo>
       <div class="room_price">
         <div class="nomal_price">
-          <h2>NT.{{getRoom[0].normalDayPrice}}</h2>
+          <h2>NT.{{ getRoom[0].normalDayPrice }}</h2>
           <span>平日(一~四)</span>
         </div>
         <div class="holiday_price">
-          <h3>NT.{{getRoom[0].holidayPrice}}</h3>
+          <h3>NT.{{ getRoom[0].holidayPrice }}</h3>
           <span>假日(五~日)</span>
         </div>
       </div>
-      <!-- <calendar class="calendar"></calendar> -->
       <div class="calendar_area">
         <calendar></calendar>
-        <button @click="openBookingPage=true">預約時段</button>
+        <button @click="openBookingPage = true">預約時段</button>
       </div>
     </div>
     <lightBox v-show="openLightBox" :roomInfo="getAllRooms"></lightBox>
-    <bookingPage v-show="openBookingPage"></bookingPage>
+    <bookingPage
+      v-show="openBookingPage"
+      @update:order="order = $event"
+      @cancel-order="order = resetData ,openBookingPage = false"
+      :data="order"
+    ></bookingPage>
   </div>
 </template>
 
@@ -38,13 +42,15 @@ export default {
     document.addEventListener("keyup", function(event) {
       if (event.key === "Escape") {
         self.openLightBox = false;
+        self.openBookingPage = false;
       }
     });
   },
   data() {
     return {
       openLightBox: null,
-      openBookingPage: null
+      openBookingPage: null,
+      order: {}
     };
   },
   components: {
@@ -54,14 +60,16 @@ export default {
     lightBox,
     bookingPage
   },
-  methods: {
-    test() {
-      console.log("aaa");
-      this.openLightBox = false;
-    }
-  },
   computed: {
-    ...mapGetters(["getAllRooms", "getRoom"])
+    ...mapGetters(["getAllRooms", "getRoom"]),
+    resetData() {
+      return {
+        name: "",
+        phone: "",
+        starTime: "",
+        endTime: ""
+      };
+    }
   }
 };
 </script>
@@ -104,5 +112,4 @@ export default {
     margin-left: 37px;
   }
 }
-</style
->>
+</style>

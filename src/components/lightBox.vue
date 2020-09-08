@@ -6,8 +6,8 @@
     <div class="img_box">
       <img :src="getImage" :alt="getName" />
       <div class="img_text">
-        <span>{{roomInfo[index].name}}</span>
-        <span>{{index+1}}/{{roomInfo.length}}</span>
+        <span>{{ roomInfo[index].name }}</span>
+        <span>{{ index + 1 }}/{{ roomInfo.length }}</span>
       </div>
     </div>
     <div class="arrow_right" @click="next">

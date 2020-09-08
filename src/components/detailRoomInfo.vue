@@ -4,70 +4,145 @@
       <h1>{{ roomInfo[0].name }}</h1>
       <div class="description">
         <div class="description_text">
-          <span>房客人數限制： {{ roomInfo[0].descriptionShort.GuestMin }}~{{ roomInfo[0].descriptionShort.GuestMax }} 人</span>
+          <span
+            >房客人數限制： {{ roomInfo[0].descriptionShort.GuestMin }}~{{
+              roomInfo[0].descriptionShort.GuestMax
+            }}
+            人</span
+          >
           <span>床型：{{ roomInfo[0].descriptionShort.Bed[0] }}</span>
-          <span>衛浴數量： {{ roomInfo[0].descriptionShort["Private-Bath"] }} 間</span>
-          <span>房間大小： {{ roomInfo[0].descriptionShort.Footage }} 平方公尺</span>
+          <span
+            >衛浴數量：
+            {{ roomInfo[0].descriptionShort["Private-Bath"] }} 間</span
+          >
+          <span
+            >房間大小：
+            {{ roomInfo[0].descriptionShort.Footage }} 平方公尺</span
+          >
           <p>{{ roomInfo[0].description }}</p>
         </div>
         <div class="check_area">
           <div class="check_in">
             <span>Check In</span>
-            <span
-              class="check_in_time"
-            >{{ roomInfo[0].checkInAndOut.checkInEarly }} — {{ roomInfo[0].checkInAndOut.checkInLate }}</span>
+            <span class="check_in_time"
+              >{{ roomInfo[0].checkInAndOut.checkInEarly }} —
+              {{ roomInfo[0].checkInAndOut.checkInLate }}</span
+            >
           </div>
           <div class="check_out">
             <span>Check Out</span>
-            <span class="check_out_time">{{ roomInfo[0].checkInAndOut.checkOut }}</span>
+            <span class="check_out_time">{{
+              roomInfo[0].checkInAndOut.checkOut
+            }}</span>
           </div>
         </div>
         <div class="amenities">
-          <div class="wifi" :class="{provided:roomInfo[0].amenities['Wi-Fi']}">
+          <div
+            class="wifi"
+            :class="{ provided: roomInfo[0].amenities['Wi-Fi'] }"
+          >
             <font-awesome-icon :icon="['fas', 'wifi']" fixed-width size="lg" />
             <span>Wi-Fi</span>
           </div>
-          <div class="phone" :class="{provided:roomInfo[0].amenities.Television}">
-            <font-awesome-icon :icon="['fas', 'phone-alt']" fixed-width size="lg" />
+          <div
+            class="phone"
+            :class="{ provided: roomInfo[0].amenities.Television }"
+          >
+            <font-awesome-icon
+              :icon="['fas', 'phone-alt']"
+              fixed-width
+              size="lg"
+            />
             <span>電話</span>
           </div>
-          <div class="view" :class="{provided:roomInfo[0].amenities['Great-View']}">
-            <font-awesome-icon :icon="['fas', 'mountain']" fixed-width size="lg" />
+          <div
+            class="view"
+            :class="{ provided: roomInfo[0].amenities['Great-View'] }"
+          >
+            <font-awesome-icon
+              :icon="['fas', 'mountain']"
+              fixed-width
+              size="lg"
+            />
             <span>漂亮的視野</span>
           </div>
-          <div class="breakfast" :class="{provided:roomInfo[0].amenities.Breakfast}">
-            <font-awesome-icon :icon="['fas', 'utensils']" fixed-width size="lg" />
+          <div
+            class="breakfast"
+            :class="{ provided: roomInfo[0].amenities.Breakfast }"
+          >
+            <font-awesome-icon
+              :icon="['fas', 'utensils']"
+              fixed-width
+              size="lg"
+            />
             <span>早餐</span>
           </div>
-          <div class="air_condition" :class="{provided:roomInfo[0].amenities['Air-Conditioner']}">
+          <div
+            class="air_condition"
+            :class="{ provided: roomInfo[0].amenities['Air-Conditioner'] }"
+          >
             <font-awesome-icon :icon="['fas', 'wind']" fixed-width size="lg" />
             <span>空調</span>
           </div>
-          <div class="smoking" :class="{provided:roomInfo[0].amenities['Smoke-Free']}">
-            <font-awesome-icon :icon="['fas', 'smoking-ban']" fixed-width size="lg" />
+          <div
+            class="smoking"
+            :class="{ provided: roomInfo[0].amenities['Smoke-Free'] }"
+          >
+            <font-awesome-icon
+              :icon="['fas', 'smoking-ban']"
+              fixed-width
+              size="lg"
+            />
             <span>禁止吸煙</span>
           </div>
-          <div class="mini_bar" :class="{provided:roomInfo[0].amenities['Mini-Bar']}">
-            <font-awesome-icon :icon="['fas', 'glass-martini-alt']" fixed-width size="lg" />
+          <div
+            class="mini_bar"
+            :class="{ provided: roomInfo[0].amenities['Mini-Bar'] }"
+          >
+            <font-awesome-icon
+              :icon="['fas', 'glass-martini-alt']"
+              fixed-width
+              size="lg"
+            />
             <span>Mini Bar</span>
           </div>
-          <div class="refrigerator" :class="{provided:roomInfo[0].amenities.Refrigerator}">
-            <font-awesome-icon :icon="['fas', 'columns']" fixed-width size="lg" />
+          <div
+            class="refrigerator"
+            :class="{ provided: roomInfo[0].amenities.Refrigerator }"
+          >
+            <font-awesome-icon
+              :icon="['fas', 'columns']"
+              fixed-width
+              size="lg"
+            />
             <span>冰箱</span>
           </div>
-          <div class="for_baby" :class="{provided:roomInfo[0].amenities['Child-Friendly']}">
+          <div
+            class="for_baby"
+            :class="{ provided: roomInfo[0].amenities['Child-Friendly'] }"
+          >
             <font-awesome-icon :icon="['fas', 'baby']" fixed-width size="lg" />
             <span>適合兒童</span>
           </div>
-          <div class="room_service" :class="{provided:roomInfo[0].amenities['Room-Service']}">
-            <font-awesome-icon :icon="['fas', 'concierge-bell']" fixed-width size="lg" />
+          <div
+            class="room_service"
+            :class="{ provided: roomInfo[0].amenities['Room-Service'] }"
+          >
+            <font-awesome-icon
+              :icon="['fas', 'concierge-bell']"
+              fixed-width
+              size="lg"
+            />
             <span>Room Service</span>
           </div>
-          <div class="sofa" :class="{provided:roomInfo[0].amenities.Sofa}">
+          <div class="sofa" :class="{ provided: roomInfo[0].amenities.Sofa }">
             <font-awesome-icon :icon="['fas', 'couch']" fixed-width size="lg" />
             <span>沙發</span>
           </div>
-          <div class="for_pets" :class="{provided:roomInfo[0].amenities['Pet-Friendly']}">
+          <div
+            class="for_pets"
+            :class="{ provided: roomInfo[0].amenities['Pet-Friendly'] }"
+          >
             <font-awesome-icon :icon="['fas', 'dog']" fixed-width size="lg" />
             <span>寵物攜帶</span>
           </div>

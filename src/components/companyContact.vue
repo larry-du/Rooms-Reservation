@@ -51,12 +51,6 @@
 <script>
 export default {
   name: "companyContact"
-  // props: {
-  //   allRooms: {
-  //     type: Array,
-  //     required: true
-  //   }
-  // }
 };
 </script>
 
