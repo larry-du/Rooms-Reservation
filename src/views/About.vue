@@ -23,7 +23,8 @@
       v-show="openBookingPage"
       @update:order="order = $event"
       @cancel-order="order = resetData ,openBookingPage = false"
-      :data="order"
+      :bookingData="order"
+      :roomInfo="getRoom"
     ></bookingPage>
   </div>
 </template>
@@ -38,12 +39,13 @@ import { mapGetters } from "vuex";
 export default {
   name: "About",
   mounted() {
-    let self = this;
-    document.addEventListener("keyup", function(event) {
-      if (event.key === "Escape") {
-        self.openLightBox = false;
-        self.openBookingPage = false;
-      }
+    const escEvent = () => {
+      this.escEventListener(event);
+    };
+    document.addEventListener("keyup", escEvent);
+
+    this.$once("hook:beforeDestroy", function() {
+      document.removeEventListener("keyup", escEvent);
     });
   },
   data() {
@@ -59,6 +61,14 @@ export default {
     calendar,
     lightBox,
     bookingPage
+  },
+  methods: {
+    escEventListener(event) {
+      if (event.key === "Escape") {
+        this.openLightBox = false;
+        this.openBookingPage = false;
+      }
+    }
   },
   computed: {
     ...mapGetters(["getAllRooms", "getRoom"]),

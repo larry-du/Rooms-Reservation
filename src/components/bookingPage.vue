@@ -5,73 +5,229 @@
         <p class="title">預約時段</p>
         <div class="your_name">
           <label for="name">姓名</label>
-          <input type="text" id="name" :value="data.name" @input="checkNameFormat($event)" />
+          <input
+            type="text"
+            class="name"
+            :class="{textFormatError:isNameError && bookingData.name}"
+            @input="checkNameFormat($event)"
+            id="name"
+            :value="bookingData.name"
+          />
         </div>
         <div class="your_number">
           <label for="phone">電話</label>
           <input
             type="text"
             id="phone"
-            :value="data.phone"
-            @input="$emit('update:order',{...data,phone:$event.target.value})"
+            class="phone"
+            :class="{phoneFormatError:isPhoneError && bookingData.phone}"
+            :value="bookingData.phone"
+            @input="checkPhoneFormat($event)"
           />
         </div>
         <div class="appointment_date">
           <span>預約起迄</span>
           <div class="date">
-            <input
-              type="date"
-              class="star"
-              :value="data.starTime"
-              @input="$emit('update:order',{...data,starTime:$event.target.value})"
-            />
-            <span>~</span>
-            <input
-              type="date"
+            <datepicker
+              placeholder="startDate"
+              :language="language"
+              class="start"
+              :format="dateFormat"
+              v-model="startDay"
+            ></datepicker>
+            <!-- <input type="date" v-model="startDay" /> -->
+            <span class="wave">~</span>
+            <datepicker
+              placeholder="endDate"
               class="end"
-              :value="data.endTime"
-              @input="$emit('update:order',{...data,endTime:$event.target.value})"
-            />
+              :language="language"
+              :format="dateFormat"
+              v-model="endDay"
+              @input="countDays"
+            ></datepicker>
+            <!-- <input type="date" class="end" v-model="endDay" /> -->
           </div>
         </div>
       </div>
       <div class="statement">
         <div class="nomarl_day">
           <span>平日時段</span>
-          <span>1 夜</span>
+          <span>{{normalDay}} 夜</span>
         </div>
         <div class="holiday">
           <span>假日時段</span>
-          <span>1 夜</span>
+          <span>{{holiday}} 夜</span>
         </div>
       </div>
       <div class="total_price">
-        <span>= NT.2850</span>
+        <span>= NT.{{totalPrice}}</span>
       </div>
       <div class="check_state">
-        <button class="cancel" @click="$emit('cancel-order')">取消</button>
-        <button class="save">確定預約</button>
+        <button class="cancel" @click="cancelOrder">取消</button>
+        <button class="save" :disabled="false" @click="saveOrder">確定預約</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import datepicker from "vuejs-datepicker";
+// import { zh } from "vuejs-datepicker/dist/locale";
 export default {
   name: "bookingPage",
+  components: {
+    datepicker
+  },
+  data() {
+    return {
+      dateFormat: "yyyy-MM-dd",
+      isNameError: true,
+      isPhoneError: true,
+      startDay: "",
+      endDay: "",
+      normalDay: 0,
+      holiday: 0,
+      language: {
+        language: "Chinese",
+        months: [
+          "1月",
+          "2月",
+          "3月",
+          "4月",
+          "5月",
+          "6月",
+          "7月",
+          "8月",
+          "9月",
+          "10月",
+          "11月",
+          "12月"
+        ],
+        monthsAbbr: [
+          "1月",
+          "2月",
+          "3月",
+          "4月",
+          "5月",
+          "6月",
+          "7月",
+          "8月",
+          "9月",
+          "10月",
+          "11月",
+          "12月"
+        ],
+        days: ["日", "ㄧ", "二", "三", "四", "五", "六"],
+        rtl: false,
+        ymd: true,
+        yearSuffix: "/"
+      }
+    };
+  },
   props: {
-    data: {
+    bookingData: {
       type: Object,
+      required: true
+    },
+    roomInfo: {
+      type: Array,
       required: true
     }
   },
   methods: {
     checkNameFormat(event) {
-      const reg = /^[\u4e00-\u9fa5_A-z]+$/;
+      const reg = /^[\u4e00-\u9fa5_A-z\s]+$/;
       const currentText = event.target.value;
-      if (currentText.match(reg)) {
-        this.$emit("update:order", { ...this.data, name: currentText });
-      }
+      currentText.match(reg) && currentText !== ""
+        ? (this.isNameError = false)
+        : (this.isNameError = true);
+      this.$emit("update:order", {
+        ...this.bookingData,
+        name: currentText
+      });
+    },
+    checkPhoneFormat(event) {
+      const reg = /^[0-9]+$/;
+      const currentText = event.target.value;
+      currentText.match(reg) && currentText !== ""
+        ? (this.isPhoneError = false)
+        : (this.isPhoneError = true);
+      this.$emit("update:order", {
+        ...this.bookingData,
+        phone: currentText
+      });
+    },
+    cancelOrder() {
+      this.isNameError = false;
+      this.isPhoneError = false;
+      this.startDay = "";
+      this.endDay = "";
+      this.normalDay = 0;
+      this.holiday = 0;
+      this.$emit("cancel-order");
+    },
+    saveOrder() {
+      this.countDays();
+    },
+    housingDay() {
+      const perDay = 1;
+      const housingDayArray = Array(this.getTotalDays.totalDays)
+        .fill(perDay)
+        .map((oneDay, i) => {
+          if (i >= 1) {
+            this.getTotalDays.startDay.setDate(
+              this.getTotalDays.startDay.getDate() + oneDay
+            );
+          }
+          return this.getTotalDays.startDay.toLocaleDateString();
+        });
+      console.log(housingDayArray);
+      return housingDayArray;
+    },
+    countDays() {
+      this.holiday = 0;
+      this.normalDay = 0;
+      this.$nextTick(function() {
+        if (this.getTotalDays.startDay < this.getTotalDays.endDay) {
+          const housingDayArray = this.housingDay();
+          housingDayArray.pop();
+          housingDayArray
+            .map(day => {
+              return new Date(day).getDay();
+            })
+            .forEach(element => {
+              if (element === 5 || element === 6 || element === 0) {
+                this.holiday += 1;
+              } else {
+                this.normalDay += 1;
+              }
+            });
+        } else {
+          this.startDay = "";
+          this.endDay = "";
+          this.normalDay = 0;
+          this.holiday = 0;
+        }
+      });
+    }
+  },
+  computed: {
+    isFormatError() {
+      return this.isNameError || this.isPhoneError;
+    },
+    getTotalDays() {
+      const start = new Date(this.startDay);
+      const end = new Date(this.endDay);
+      return {
+        totalDays: new Date(end.getTime() - start.getTime()).getDate(),
+        startDay: start,
+        endDay: end
+      };
+    },
+    totalPrice() {
+      const normalPrice = this.roomInfo[0].normalDayPrice;
+      const holidayPrice = this.roomInfo[0].holidayPrice;
+      return normalPrice * this.normalDay + holidayPrice * this.holiday;
     }
   }
 };
@@ -115,25 +271,37 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    #name {
+    .name {
       flex: 0 1 80%;
       border: 2px solid $gray;
       border-radius: 5px;
+    }
+    .name:focus {
+      outline: none;
+    }
+    & .textFormatError {
+      border-color: red;
     }
   }
   & .your_number {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    #phone {
+    .phone {
       flex: 0 1 80%;
       border: 2px solid $gray;
       border-radius: 5px;
     }
+    .phone:focus {
+      outline: none;
+    }
+    & .phoneFormatError {
+      border-color: red;
+    }
   }
 }
 
-.inser_area div:nth-child(n + 3) {
+.inser_area div + div {
   margin-top: 15px;
 }
 
@@ -142,14 +310,18 @@ export default {
   justify-content: space-between;
   align-items: center;
   & .date {
+    display: flex;
     flex: 0 1 80%;
-    & span {
-      display: inline-block;
+    & input {
+      width: 100%;
+    }
+    & .wave {
+      // display: inline-block;
       width: 10%;
       text-align: center;
     }
   }
-  & .star {
+  & .start {
     width: 45%;
     border: 2px solid $gray;
     border-radius: 5px;
@@ -215,6 +387,9 @@ export default {
     height: 37px;
     color: white;
     background-color: #484848;
+  }
+  & button:disabled {
+    background-color: $gray;
   }
 }
 </style
