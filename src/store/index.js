@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import axios from "axios";
 // import state from "./state";
 // import getters from "./getters";
 
@@ -108,9 +109,34 @@ export default new Vuex.Store({
     getRoom(state) {
       // console.log(state);
       return state.room;
+    },
+    getBookingData(state) {
+      return state.booking;
     }
   },
-  mutations: {},
-  actions: {},
+  mutations: {
+    updateBookingData(state, bookingData) {
+      state.booking = [...state.booking, bookingData];
+    }
+  },
+  actions: {
+    saveBookingData({ commit }, bookingData) {
+      commit("updateBookingData", bookingData);
+    },
+    async test() {
+      const response = await axios.get(
+        "https://challenge.thef2e.com/api/thef2e2019/stage6/rooms",
+        {
+          headers: {
+            "Content-Type": "appliacation/json",
+            Accept: "appliacation/json",
+            Authorization:
+              "Bearer Q1KZP9uRKHLWL6COiKCMD2mpnYNI7vopLEOJUvWM62sV6CQb0ht2EIedUHmD"
+          }
+        }
+      );
+      console.log(response);
+    }
+  },
   modules: {}
 });

@@ -36,6 +36,14 @@ export default {
   },
   computed: {
     ...mapGetters(["getAllRooms"])
+  },
+  created() {
+    this.getAllroomInfo();
+  },
+  methods: {
+    getAllroomInfo() {
+      this.$store.dispatch("test");
+    }
   }
 };
 </script>

@@ -1,8 +1,14 @@
 <template>
   <div class="about">
-    <showRoom @open-light-box="openLightBox = true" :roomInfo="getRoom"></showRoom>
+    <showRoom
+      @open-light-box="openLightBox = true"
+      :roomInfo="getRoom"
+    ></showRoom>
     <div class="reservation">
-      <detailRoomInfo :roomInfo="getRoom" class="detail_room_info"></detailRoomInfo>
+      <detailRoomInfo
+        :roomInfo="getRoom"
+        class="detail_room_info"
+      ></detailRoomInfo>
       <div class="room_price">
         <div class="nomal_price">
           <h2>NT.{{ getRoom[0].normalDayPrice }}</h2>
@@ -14,16 +20,17 @@
         </div>
       </div>
       <div class="calendar_area">
-        <calendar></calendar>
+        <calendar :bookingData="getBookingData"></calendar>
         <button @click="openBookingPage = true">預約時段</button>
       </div>
     </div>
     <lightBox v-show="openLightBox" :roomInfo="getAllRooms"></lightBox>
     <bookingPage
       v-show="openBookingPage"
-      @update:order="order = $event"
-      @cancel-order="order = resetData ,openBookingPage = false"
-      :bookingData="order"
+      @update:order="booking = $event"
+      @save-order="saveToVuex"
+      @cancel-order="(booking = resetData), (openBookingPage = false)"
+      :bookingData="booking"
       :roomInfo="getRoom"
     ></bookingPage>
   </div>
@@ -52,7 +59,7 @@ export default {
     return {
       openLightBox: null,
       openBookingPage: null,
-      order: {}
+      booking: {}
     };
   },
   components: {
@@ -68,16 +75,21 @@ export default {
         this.openLightBox = false;
         this.openBookingPage = false;
       }
+    },
+    saveToVuex() {
+      // console.log(this);
+      // console.log(this.$store);
+      console.log(this.booking);
+      this.$store.dispatch("saveBookingData", this.booking);
     }
   },
   computed: {
-    ...mapGetters(["getAllRooms", "getRoom"]),
+    ...mapGetters(["getAllRooms", "getRoom", "getBookingData"]),
     resetData() {
       return {
         name: "",
-        phone: "",
-        starTime: "",
-        endTime: ""
+        tel: "",
+        date: []
       };
     }
   }

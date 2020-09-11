@@ -8,7 +8,7 @@
           <input
             type="text"
             class="name"
-            :class="{textFormatError:isNameError && bookingData.name}"
+            :class="{ textFormatError: isNameError && bookingData.name }"
             @input="checkNameFormat($event)"
             id="name"
             :value="bookingData.name"
@@ -20,8 +20,8 @@
             type="text"
             id="phone"
             class="phone"
-            :class="{phoneFormatError:isPhoneError && bookingData.phone}"
-            :value="bookingData.phone"
+            :class="{ phoneFormatError: isPhoneError && bookingData.phone }"
+            :value="bookingData.tel"
             @input="checkPhoneFormat($event)"
           />
         </div>
@@ -34,6 +34,7 @@
               class="start"
               :format="dateFormat"
               v-model="startDay"
+              :disabled-dates="state.disabledBeforeToday"
             ></datepicker>
             <!-- <input type="date" v-model="startDay" /> -->
             <span class="wave">~</span>
@@ -44,6 +45,7 @@
               :format="dateFormat"
               v-model="endDay"
               @input="countDays"
+              :disabled-dates="state.disableBeforeStartDay"
             ></datepicker>
             <!-- <input type="date" class="end" v-model="endDay" /> -->
           </div>
@@ -52,19 +54,25 @@
       <div class="statement">
         <div class="nomarl_day">
           <span>平日時段</span>
-          <span>{{normalDay}} 夜</span>
+          <span>{{ normalDay }} 夜</span>
         </div>
         <div class="holiday">
           <span>假日時段</span>
-          <span>{{holiday}} 夜</span>
+          <span>{{ holiday }} 夜</span>
         </div>
       </div>
       <div class="total_price">
-        <span>= NT.{{totalPrice}}</span>
+        <span>= NT.{{ totalPrice }}</span>
       </div>
       <div class="check_state">
         <button class="cancel" @click="cancelOrder">取消</button>
-        <button class="save" :disabled="false" @click="saveOrder">確定預約</button>
+        <button
+          class="save"
+          :disabled="isFormatError"
+          @click="$emit('save-order')"
+        >
+          確定預約
+        </button>
       </div>
     </div>
   </div>
@@ -72,7 +80,6 @@
 
 <script>
 import datepicker from "vuejs-datepicker";
-// import { zh } from "vuejs-datepicker/dist/locale";
 export default {
   name: "bookingPage",
   components: {
@@ -154,7 +161,7 @@ export default {
         : (this.isPhoneError = true);
       this.$emit("update:order", {
         ...this.bookingData,
-        phone: currentText
+        tel: currentText
       });
     },
     cancelOrder() {
@@ -166,22 +173,23 @@ export default {
       this.holiday = 0;
       this.$emit("cancel-order");
     },
-    saveOrder() {
-      this.countDays();
-    },
     housingDay() {
       const perDay = 1;
       const housingDayArray = Array(this.getTotalDays.totalDays)
         .fill(perDay)
         .map((oneDay, i) => {
-          if (i >= 1) {
+          if (i >= oneDay) {
             this.getTotalDays.startDay.setDate(
               this.getTotalDays.startDay.getDate() + oneDay
             );
           }
           return this.getTotalDays.startDay.toLocaleDateString();
         });
-      console.log(housingDayArray);
+      // console.log(housingDayArray);
+      this.$emit("update:order", {
+        ...this.bookingData,
+        date: housingDayArray
+      });
       return housingDayArray;
     },
     countDays() {
@@ -202,12 +210,13 @@ export default {
                 this.normalDay += 1;
               }
             });
-        } else {
-          this.startDay = "";
-          this.endDay = "";
-          this.normalDay = 0;
-          this.holiday = 0;
         }
+        // else {
+        //   this.startDay = "";
+        //   this.endDay = "";
+        //   this.normalDay = 0;
+        //   this.holiday = 0;
+        // }
       });
     }
   },
@@ -228,6 +237,21 @@ export default {
       const normalPrice = this.roomInfo[0].normalDayPrice;
       const holidayPrice = this.roomInfo[0].holidayPrice;
       return normalPrice * this.normalDay + holidayPrice * this.holiday;
+    },
+    state() {
+      return {
+        disabledBeforeToday: {
+          customPredictor: function(date) {
+            if (new Date() >= date) {
+              return true;
+            }
+          }
+        },
+        disableBeforeStartDay: {
+          to: new Date(this.startDay),
+          dates: [new Date(this.startDay)]
+        }
+      };
     }
   }
 };
@@ -391,6 +415,5 @@ export default {
   & button:disabled {
     background-color: $gray;
   }
-}
-</style
+}</style
 >>

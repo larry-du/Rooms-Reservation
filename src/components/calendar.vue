@@ -1,6 +1,6 @@
 <template>
   <div class="calendar">
-    <datepicker :inline="true"></datepicker>
+    <datepicker :inline="true" :language="language"></datepicker>
   </div>
 </template>
 
@@ -10,11 +10,66 @@ export default {
   name: "calendar",
   data() {
     return {
-      date: Date.now()
+      language: {
+        language: "Chinese",
+        months: [
+          "1月",
+          "2月",
+          "3月",
+          "4月",
+          "5月",
+          "6月",
+          "7月",
+          "8月",
+          "9月",
+          "10月",
+          "11月",
+          "12月"
+        ],
+        monthsAbbr: [
+          "1月",
+          "2月",
+          "3月",
+          "4月",
+          "5月",
+          "6月",
+          "7月",
+          "8月",
+          "9月",
+          "10月",
+          "11月",
+          "12月"
+        ],
+        days: ["日", "ㄧ", "二", "三", "四", "五", "六"],
+        rtl: false,
+        ymd: true,
+        yearSuffix: "/"
+      }
     };
+  },
+  props: {
+    bookingData: {
+      type: Array,
+      required: true
+    }
   },
   components: {
     Datepicker
+  },
+  computed: {
+    // state() {
+    //   // console.log(this.bookingData);
+    //   return {
+    //     disabledBeforeToday: {
+    //       ranges: [
+    //         {
+    //           from: new Date(2020, 11, 25),
+    //           to: new Date(2020, 11, 30)
+    //         }
+    //       ]
+    //     }
+    //   };
+    // }
   }
 };
 </script>
