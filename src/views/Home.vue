@@ -7,6 +7,7 @@
           v-for="roomData in getAllRooms"
           :key="roomData.id"
           :roomInfo="roomData"
+          @get-room-id="toPage($event)"
         ></roomPreview>
       </b-row>
     </b-container>
@@ -38,11 +39,20 @@ export default {
     ...mapGetters(["getAllRooms"])
   },
   created() {
+    // console.log(this.getAllRooms);
     this.getAllroomInfo();
   },
   methods: {
     getAllroomInfo() {
-      this.$store.dispatch("test");
+      this.$store.dispatch("getAllRoomsApi");
+    },
+    toPage(e) {
+      // console.log(e);
+      this.$router.push({
+        name: "About",
+        params: { id: e }
+      });
+      this.$store.dispatch("test", e);
     }
   }
 };

@@ -1,5 +1,5 @@
 <template>
-  <b-col sm="6" md="4" class="room_detial">
+  <b-col sm="6" md="4" class="room_detial" @click="$emit('get-room-id',roomInfo.id)">
     <b-card
       class="room_preview"
       no-body
@@ -35,11 +35,6 @@ export default {
     roomInfo: {
       type: Object,
       required: true
-    }
-  },
-  methods: {
-    test() {
-      console.log(this.roomInfo.imageUrl);
     }
   }
 };

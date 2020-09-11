@@ -1,14 +1,8 @@
 <template>
   <div class="about">
-    <showRoom
-      @open-light-box="openLightBox = true"
-      :roomInfo="getRoom"
-    ></showRoom>
+    <showRoom @open-light-box="openLightBox = true" :roomInfo="getRoom"></showRoom>
     <div class="reservation">
-      <detailRoomInfo
-        :roomInfo="getRoom"
-        class="detail_room_info"
-      ></detailRoomInfo>
+      <detailRoomInfo :roomInfo="getRoom" class="detail_room_info"></detailRoomInfo>
       <div class="room_price">
         <div class="nomal_price">
           <h2>NT.{{ getRoom[0].normalDayPrice }}</h2>
@@ -77,9 +71,6 @@ export default {
       }
     },
     saveToVuex() {
-      // console.log(this);
-      // console.log(this.$store);
-      console.log(this.booking);
       this.$store.dispatch("saveBookingData", this.booking);
     }
   },
