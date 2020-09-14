@@ -1,10 +1,10 @@
 <template>
   <div class="show_room">
-    <header class="roomInfo">
-      <div class="room_detail" @click="$emit('open-light-box')">
+    <header class="roomInfo" @click="$emit('open-light-box')">
+      <div class="room_detail">
         <img :src="roomInfo[0].imageUrl[0]" alt />
       </div>
-      <div class="more_detail" @click="$emit('open-light-box')">
+      <div class="more_detail">
         <img :src="roomInfo[0].imageUrl[1]" alt />
         <img :src="roomInfo[0].imageUrl[2]" alt />
       </div>

@@ -1,5 +1,10 @@
 <template>
-  <b-col sm="6" md="4" class="room_detial" @click="$emit('get-room-id',roomInfo.id)">
+  <b-col
+    sm="6"
+    md="4"
+    class="room_detial"
+    @click="$emit('get-room-id', roomInfo.id)"
+  >
     <b-card
       class="room_preview"
       no-body
@@ -63,7 +68,7 @@ export default {
   & .room_price {
     display: flex;
     justify-content: space-between;
-    padding: 23px 24px 27px 30px;
+    padding: 23px 10px 27px 10px;
   }
 
   &:hover {

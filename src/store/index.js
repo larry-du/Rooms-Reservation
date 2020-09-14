@@ -59,45 +59,45 @@ export default new Vuex.Store({
       // }
     ],
     room: [
-      {
-        id: "3Elqe8kfMxdZv5xFLV4OUeN6jhmxIvQSTyj4eTgIowfIRvF4rerA2Nuegzc2Rgwu",
-        name: "Single Room",
-        imageUrl: [
-          "https://images.unsplash.com/photo-1551776235-dde6d482980b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2134&q=80",
-          "https://images.unsplash.com/photo-1526880792616-4217886b9dc2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
-          "https://images.unsplash.com/photo-1515511856280-7b23f68d2996?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1953&q=80"
-        ],
-        normalDayPrice: 1380,
-        holidayPrice: 1500,
-        descriptionShort: {
-          GuestMin: 1,
-          GuestMax: 1,
-          Bed: ["Single"],
-          "Private-Bath": 1,
-          Footage: 18
-        },
-        description:
-          "Single Room is only reserved for one guest. There is a bedroom with a single size bed and a private bathroom. Everything you need prepared for you: sheets and blankets, towels, soap and shampoo, hairdryer are provided. In the room there is AC and of course WiFi.",
-        checkInAndOut: {
-          checkInEarly: "15:00",
-          checkInLate: "19:00",
-          checkOut: "10:00"
-        },
-        amenities: {
-          "Wi-Fi": true,
-          Breakfast: true,
-          "Mini-Bar": false,
-          "Room-Service": false,
-          Television: true,
-          "Air-Conditioner": true,
-          Refrigerator: true,
-          Sofa: false,
-          "Great-View": false,
-          "Smoke-Free": true,
-          "Child-Friendly": false,
-          "Pet-Friendly": true
-        }
-      }
+      // {
+      //   id: "3Elqe8kfMxdZv5xFLV4OUeN6jhmxIvQSTyj4eTgIowfIRvF4rerA2Nuegzc2Rgwu",
+      //   name: "Single Room",
+      //   imageUrl: [
+      //     "https://images.unsplash.com/photo-1551776235-dde6d482980b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2134&q=80",
+      //     "https://images.unsplash.com/photo-1526880792616-4217886b9dc2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+      //     "https://images.unsplash.com/photo-1515511856280-7b23f68d2996?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1953&q=80"
+      //   ],
+      //   normalDayPrice: 1380,
+      //   holidayPrice: 1500,
+      //   descriptionShort: {
+      //     GuestMin: 1,
+      //     GuestMax: 1,
+      //     Bed: ["Single"],
+      //     "Private-Bath": 1,
+      //     Footage: 18
+      //   },
+      //   description:
+      //     "Single Room is only reserved for one guest. There is a bedroom with a single size bed and a private bathroom. Everything you need prepared for you: sheets and blankets, towels, soap and shampoo, hairdryer are provided. In the room there is AC and of course WiFi.",
+      //   checkInAndOut: {
+      //     checkInEarly: "15:00",
+      //     checkInLate: "19:00",
+      //     checkOut: "10:00"
+      //   },
+      //   amenities: {
+      //     "Wi-Fi": true,
+      //     Breakfast: true,
+      //     "Mini-Bar": false,
+      //     "Room-Service": false,
+      //     Television: true,
+      //     "Air-Conditioner": true,
+      //     Refrigerator: true,
+      //     Sofa: false,
+      //     "Great-View": false,
+      //     "Smoke-Free": true,
+      //     "Child-Friendly": false,
+      //     "Pet-Friendly": true
+      //   }
+      // }
     ],
     booking: []
   },
@@ -120,6 +120,9 @@ export default new Vuex.Store({
     },
     getAllRoomsData(state, allRooms) {
       state.allRooms = allRooms;
+    },
+    getRoomData(state, roomData) {
+      state.room = roomData;
     }
   },
   actions: {
@@ -144,6 +147,23 @@ export default new Vuex.Store({
       } catch (error) {
         console.log(error);
       }
+    },
+    async getRoomData({ commit }, roomID) {
+      // console.log(roomID)
+      const response = await axios.get(
+        `https://challenge.thef2e.com/api/thef2e2019/stage6/room/${roomID}`,
+        {
+          headers: {
+            "Content-Type": "appliacation/json",
+            Accept: "appliacation/json",
+            Authorization:
+              "Bearer Q1KZP9uRKHLWL6COiKCMD2mpnYNI7vopLEOJUvWM62sV6CQb0ht2EIedUHmD"
+          }
+        }
+      );
+      // console.log(commit)
+      commit("getRoomData", response.data.room);
+      // console.log(response.data.room)
     }
   },
   modules: {}

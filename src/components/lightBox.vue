@@ -6,8 +6,8 @@
     <div class="img_box">
       <img :src="getImage" :alt="getName" />
       <div class="img_text">
-        <span>{{ roomInfo[index].name }}</span>
-        <span>{{ index + 1 }}/{{ roomInfo.length }}</span>
+        <span>{{ roomInfo[0].name }}</span>
+        <span>{{ index + 1 }}/{{ roomInfo[0].imageUrl.length }}</span>
       </div>
     </div>
     <div class="arrow_right" @click="next">
@@ -31,22 +31,20 @@ export default {
   methods: {
     next() {
       this.index = this.index + 1;
-      if (this.index > this.roomInfo.length - 1) this.index = 0;
+      if (this.index > this.roomInfo[0].imageUrl.length - 1) this.index = 0;
     },
     prev() {
       this.index = this.index - 1;
-      if (this.index < 0) this.index = this.roomInfo.length - 1;
+      if (this.index < 0) this.index = this.roomInfo[0].imageUrl.length - 1;
     }
-    // test(e) {
-    //   console.log(e);
-    // }
   },
   computed: {
     getImage() {
-      return this.roomInfo[this.index].imageUrl;
+      // console.log(this.roomInfo);
+      return this.roomInfo[0].imageUrl[this.index];
     },
     getName() {
-      return this.roomInfo[this.index].name;
+      return this.roomInfo[0].name;
     }
   }
 };

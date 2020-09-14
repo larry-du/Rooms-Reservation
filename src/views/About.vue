@@ -18,7 +18,7 @@
         <button @click="openBookingPage = true">預約時段</button>
       </div>
     </div>
-    <lightBox v-show="openLightBox" :roomInfo="getAllRooms"></lightBox>
+    <lightBox v-show="openLightBox" :roomInfo="getRoom"></lightBox>
     <bookingPage
       v-show="openBookingPage"
       @update:order="booking = $event"
@@ -71,8 +71,13 @@ export default {
       }
     },
     saveToVuex() {
-      this.$store.dispatch("saveBookingData", this.booking);
+      // console.log(this.getRoom[0].normalDayPrice);
+      // console.log(this.getAllrooms());
+      // this.$store.dispatch("saveBookingData", this.booking);
     }
+    // getAllroomInfo() {
+    //   this.$store.dispatch("getAllRoomsApi");
+    // }
   },
   computed: {
     ...mapGetters(["getAllRooms", "getRoom", "getBookingData"]),

@@ -38,21 +38,13 @@ export default {
   computed: {
     ...mapGetters(["getAllRooms"])
   },
-  created() {
-    // console.log(this.getAllRooms);
-    this.getAllroomInfo();
-  },
   methods: {
-    getAllroomInfo() {
-      this.$store.dispatch("getAllRoomsApi");
-    },
-    toPage(e) {
-      // console.log(e);
+    toPage(roomId) {
       this.$router.push({
         name: "About",
-        params: { id: e }
+        params: { id: roomId }
       });
-      this.$store.dispatch("test", e);
+      // this.$store.dispatch("getRoomData", roomId);
     }
   }
 };
