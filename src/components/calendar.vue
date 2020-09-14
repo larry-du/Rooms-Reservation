@@ -1,11 +1,12 @@
 <template>
   <div class="calendar">
-    <datepicker :inline="true" :language="language"></datepicker>
+    <datepicker :inline="true" :language="language" :disabled-dates="state.bookingDay"></datepicker>
   </div>
 </template>
 
 <script>
 import Datepicker from "vuejs-datepicker";
+// import { mapGetters } from "vuex";
 export default {
   name: "calendar",
   data() {
@@ -48,7 +49,7 @@ export default {
     };
   },
   props: {
-    bookingData: {
+    bookingDay: {
       type: Array,
       required: true
     }
@@ -56,20 +57,19 @@ export default {
   components: {
     Datepicker
   },
+  created() {
+    console.log(this.bookingDay);
+  },
   computed: {
-    // state() {
-    //   // console.log(this.bookingData);
-    //   return {
-    //     disabledBeforeToday: {
-    //       ranges: [
-    //         {
-    //           from: new Date(2020, 11, 25),
-    //           to: new Date(2020, 11, 30)
-    //         }
-    //       ]
-    //     }
-    //   };
-    // }
+    // ...mapGetters(["getBookingData"]),
+    state() {
+      // console.log(this.bookingData);
+      return {
+        bookingDay: {
+          dates: this.bookingDay
+        }
+      };
+    }
   }
 };
 </script>
@@ -90,5 +90,6 @@ export default {
       pointer-events: none;
     }
   }
-}</style
+}
+</style
 >>

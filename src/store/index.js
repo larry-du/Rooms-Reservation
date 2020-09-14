@@ -110,25 +110,26 @@ export default new Vuex.Store({
       // console.log(state);
       return state.room;
     },
-    getBookingData(state) {
-      return state.booking;
+    getBookingDay(state) {
+      return state.booking.map(bookingData => new Date(bookingData.date));
     }
   },
   mutations: {
-    updateBookingData(state, bookingData) {
-      state.booking = [...state.booking, bookingData];
-    },
+    // createBookingData(state, bookingData) {
+    //   state.booking = [...state.booking, bookingData];
+    // },
     getAllRoomsData(state, allRooms) {
       state.allRooms = allRooms;
     },
     getRoomData(state, roomData) {
-      state.room = roomData;
+      state.room = roomData.room;
+      state.booking = roomData.booking;
     }
   },
   actions: {
-    saveBookingData({ commit }, bookingData) {
-      commit("updateBookingData", bookingData);
-    },
+    // saveBookingData({ commit }, bookingData) {
+    //   commit("createBookingData", bookingData);
+    // },
     async getAllRoomsApi({ commit }) {
       try {
         const response = await axios.get(
@@ -142,28 +143,46 @@ export default new Vuex.Store({
             }
           }
         );
-        // console.log(response.data.items)
         commit("getAllRoomsData", response.data.items);
       } catch (error) {
         console.log(error);
       }
     },
     async getRoomData({ commit }, roomID) {
-      // console.log(roomID)
-      const response = await axios.get(
-        `https://challenge.thef2e.com/api/thef2e2019/stage6/room/${roomID}`,
-        {
+      try {
+        const response = await axios.get(
+          `https://challenge.thef2e.com/api/thef2e2019/stage6/room/${roomID}`,
+          {
+            headers: {
+              "Content-Type": "appliacation/json",
+              Accept: "appliacation/json",
+              Authorization:
+                "Bearer Q1KZP9uRKHLWL6COiKCMD2mpnYNI7vopLEOJUvWM62sV6CQb0ht2EIedUHmD"
+            }
+          }
+        );
+        // console.log('get')
+        commit("getRoomData", response.data);
+        // console.log(response.data.booking)
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async createBooking({ dispatch }, { bookingData, roomID }) {
+      try {
+        await axios.post(`https://challenge.thef2e.com/api/thef2e2019/stage6/room/${roomID}`, bookingData, {
           headers: {
             "Content-Type": "appliacation/json",
             Accept: "appliacation/json",
             Authorization:
               "Bearer Q1KZP9uRKHLWL6COiKCMD2mpnYNI7vopLEOJUvWM62sV6CQb0ht2EIedUHmD"
           }
-        }
-      );
-      // console.log(commit)
-      commit("getRoomData", response.data.room);
-      // console.log(response.data.room)
+        })
+        dispatch('getRoomData', roomID)
+      } catch (error) {
+        console.log(error)
+      }
+
     }
   },
   modules: {}

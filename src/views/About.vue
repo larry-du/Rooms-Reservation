@@ -14,18 +14,19 @@
         </div>
       </div>
       <div class="calendar_area">
-        <calendar :bookingData="getBookingData"></calendar>
+        <calendar :bookingDay="getBookingDay"></calendar>
         <button @click="openBookingPage = true">預約時段</button>
       </div>
     </div>
-    <lightBox v-show="openLightBox" :roomInfo="getRoom"></lightBox>
+    <lightBox v-show="openLightBox" :roomInfo="getRoom" @cancel-light-box="openLightBox = false"></lightBox>
     <bookingPage
       v-show="openBookingPage"
       @update:order="booking = $event"
-      @save-order="saveToVuex"
+      @save-order="(saveToVuex()),(openBookingPage = false)"
       @cancel-order="(booking = resetData), (openBookingPage = false)"
       :bookingData="booking"
       :roomInfo="getRoom"
+      :bookingDay="getBookingDay"
     ></bookingPage>
   </div>
 </template>
@@ -71,16 +72,15 @@ export default {
       }
     },
     saveToVuex() {
-      // console.log(this.getRoom[0].normalDayPrice);
-      // console.log(this.getAllrooms());
-      // this.$store.dispatch("saveBookingData", this.booking);
+      // console.log(this.getRoom[0].id);
+      this.$store.dispatch("createBooking", {
+        bookingData: this.booking,
+        roomID: this.getRoom[0].id
+      });
     }
-    // getAllroomInfo() {
-    //   this.$store.dispatch("getAllRoomsApi");
-    // }
   },
   computed: {
-    ...mapGetters(["getAllRooms", "getRoom", "getBookingData"]),
+    ...mapGetters(["getAllRooms", "getRoom", "getBookingDay"]),
     resetData() {
       return {
         name: "",
@@ -126,8 +126,8 @@ export default {
   & .holiday_price h3 {
     font-size: 16px;
   }
-  @media (min-width: 576px) {
-    margin-left: 37px;
-  }
+  // @media (min-width: 576px) {
+  //   margin-left: 37px;
+  // }
 }
 </style>

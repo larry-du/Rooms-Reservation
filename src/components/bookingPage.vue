@@ -66,13 +66,7 @@
       </div>
       <div class="check_state">
         <button class="cancel" @click="cancelOrder">取消</button>
-        <button
-          class="save"
-          :disabled="isFormatError"
-          @click="$emit('save-order')"
-        >
-          確定預約
-        </button>
+        <button class="save" :disabled="isFormatError" @click="$emit('save-order')">確定預約</button>
       </div>
     </div>
   </div>
@@ -139,6 +133,10 @@ export default {
     roomInfo: {
       type: Array,
       required: true
+    },
+    bookingDay: {
+      type: Array,
+      required: true
     }
   },
   methods: {
@@ -165,8 +163,8 @@ export default {
       });
     },
     cancelOrder() {
-      this.isNameError = false;
-      this.isPhoneError = false;
+      this.isNameError = true;
+      this.isPhoneError = true;
       this.startDay = "";
       this.endDay = "";
       this.normalDay = 0;
@@ -183,9 +181,15 @@ export default {
               this.getTotalDays.startDay.getDate() + oneDay
             );
           }
-          return this.getTotalDays.startDay.toLocaleDateString();
+          return this.getTotalDays.startDay
+            .toLocaleDateString("zh-Hans-CN", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit"
+            })
+            .split("/")
+            .join("-");
         });
-      // console.log(housingDayArray);
       this.$emit("update:order", {
         ...this.bookingData,
         date: housingDayArray
@@ -211,12 +215,6 @@ export default {
               }
             });
         }
-        // else {
-        //   this.startDay = "";
-        //   this.endDay = "";
-        //   this.normalDay = 0;
-        //   this.holiday = 0;
-        // }
       });
     }
   },
@@ -241,6 +239,7 @@ export default {
     state() {
       return {
         disabledBeforeToday: {
+          dates: this.bookingDay,
           customPredictor: function(date) {
             if (new Date() >= date) {
               return true;
@@ -249,7 +248,12 @@ export default {
         },
         disableBeforeStartDay: {
           to: new Date(this.startDay),
-          dates: [new Date(this.startDay)]
+          dates: [new Date(this.startDay), ...this.bookingDay]
+          // customPredictor: function() {
+          //   if (!this.startDay) {
+          //     return true;
+          //   }
+          // }
         }
       };
     }
@@ -415,5 +419,6 @@ export default {
   & button:disabled {
     background-color: $gray;
   }
-}</style
+}
+</style
 >>

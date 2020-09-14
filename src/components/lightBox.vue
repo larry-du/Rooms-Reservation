@@ -1,5 +1,5 @@
 <template>
-  <div class="light_box">
+  <div class="light_box" @click.self="$emit('cancel-light-box')">
     <div class="arrow_left" @click="prev">
       <font-awesome-icon :icon="['fas', 'chevron-left']" />
     </div>
@@ -40,7 +40,6 @@ export default {
   },
   computed: {
     getImage() {
-      // console.log(this.roomInfo);
       return this.roomInfo[0].imageUrl[this.index];
     },
     getName() {
