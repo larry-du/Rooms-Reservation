@@ -1,5 +1,10 @@
 <template>
-  <b-col sm="6" md="4" class="room_detial" @click="$emit('get-room-id', roomInfo.id)">
+  <b-col
+    sm="6"
+    md="4"
+    class="room_detial"
+    @click="$emit('get-room-id', roomInfo.id)"
+  >
     <b-card
       class="room_preview"
       no-body

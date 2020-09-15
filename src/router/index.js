@@ -20,8 +20,7 @@ const routes = [
     path: "/about/:id",
     name: "About",
 
-    component: () =>
-      import("../views/About.vue"),
+    component: () => import("../views/About.vue"),
     beforeEnter: async (to, from, next) => {
       await store.dispatch("getRoomData", to.params.id);
       next();

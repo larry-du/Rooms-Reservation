@@ -66,7 +66,7 @@
       </div>
       <div class="check_state">
         <button class="cancel" @click="cancelOrder">取消</button>
-        <button class="save" :disabled="isFormatError" @click="$emit('save-order')">確定預約</button>
+        <button class="save" :disabled="isFormatError" @click="confirmBooking">確定預約</button>
       </div>
     </div>
   </div>
@@ -216,6 +216,15 @@ export default {
             });
         }
       });
+    },
+    confirmBooking() {
+      this.$emit("save-order");
+      this.isNameError = true;
+      this.isPhoneError = true;
+      this.startDay = "";
+      this.endDay = "";
+      this.normalDay = 0;
+      this.holiday = 0;
     }
   },
   computed: {
@@ -241,7 +250,14 @@ export default {
         disabledBeforeToday: {
           dates: this.bookingDay,
           customPredictor: function(date) {
-            if (new Date() >= date) {
+            // yachen 的爛方法XD
+            const now = Date.now();
+            const totalSecondsADay = 60 * 60 * 24 * 1000;
+            const totalSecondaOfNityDays = totalSecondsADay * 90;
+            if (
+              new Date() >= date ||
+              date.getTime() > now + totalSecondaOfNityDays
+            ) {
               return true;
             }
           }
@@ -249,11 +265,6 @@ export default {
         disableBeforeStartDay: {
           to: new Date(this.startDay),
           dates: [new Date(this.startDay), ...this.bookingDay]
-          // customPredictor: function() {
-          //   if (!this.startDay) {
-          //     return true;
-          //   }
-          // }
         }
       };
     }

@@ -1,6 +1,10 @@
 <template>
   <div class="calendar">
-    <datepicker :inline="true" :language="language" :disabled-dates="state.bookingDay"></datepicker>
+    <datepicker
+      :inline="true"
+      :language="language"
+      :disabled-dates="state.bookingDay"
+    ></datepicker>
   </div>
 </template>
 
@@ -57,9 +61,9 @@ export default {
   components: {
     Datepicker
   },
-  created() {
-    console.log(this.bookingDay);
-  },
+  // created() {
+  //   console.log(this.bookingDay);
+  // },
   computed: {
     // ...mapGetters(["getBookingData"]),
     state() {
@@ -89,7 +93,17 @@ export default {
     & .cell {
       pointer-events: none;
     }
+    & .disabled {
+      background-image: repeating-linear-gradient(
+        45deg,
+        $gray-200 0px,
+        $gray-200 3px,
+        black 3px,
+        black 4px,
+        $gray-200 4px,
+        $gray-200 7px
+      );
+    }
   }
-}
-</style
+}</style
 >>

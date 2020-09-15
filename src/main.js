@@ -45,6 +45,7 @@ import {
   faChevronRight
 } from "@fortawesome/free-solid-svg-icons";
 
+import { faCheckCircle } from "@fortawesome/free-regular-svg-icons";
 Vue.config.productionTip = false;
 
 library.add(
@@ -65,7 +66,8 @@ library.add(
   faMountain,
   faUtensils,
   faChevronLeft,
-  faChevronRight
+  faChevronRight,
+  faCheckCircle
 );
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);

@@ -99,7 +99,8 @@ export default new Vuex.Store({
       //   }
       // }
     ],
-    booking: []
+    booking: [],
+    receiveState: ""
   },
   getters: {
     getAllRooms(state) {
@@ -112,18 +113,24 @@ export default new Vuex.Store({
     },
     getBookingDay(state) {
       return state.booking.map(bookingData => new Date(bookingData.date));
+    },
+    getReceiveState(state) {
+      return state.receiveState;
     }
   },
   mutations: {
-    // createBookingData(state, bookingData) {
-    //   state.booking = [...state.booking, bookingData];
-    // },
+    bookingResult(state, result) {
+      state.receiveState = result;
+    },
     getAllRoomsData(state, allRooms) {
       state.allRooms = allRooms;
     },
     getRoomData(state, roomData) {
       state.room = roomData.room;
       state.booking = roomData.booking;
+    },
+    resetBookingResult(state) {
+      state.receiveState = "";
     }
   },
   actions: {
@@ -165,24 +172,29 @@ export default new Vuex.Store({
         commit("getRoomData", response.data);
         // console.log(response.data.booking)
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     },
-    async createBooking({ dispatch }, { bookingData, roomID }) {
+    async createBooking({ commit, dispatch }, { bookingData, roomID }) {
       try {
-        await axios.post(`https://challenge.thef2e.com/api/thef2e2019/stage6/room/${roomID}`, bookingData, {
-          headers: {
-            "Content-Type": "appliacation/json",
-            Accept: "appliacation/json",
-            Authorization:
-              "Bearer Q1KZP9uRKHLWL6COiKCMD2mpnYNI7vopLEOJUvWM62sV6CQb0ht2EIedUHmD"
+        await axios.post(
+          `https://challenge.thef2e.com/api/thef2e2019/stage6/room/${roomID}`,
+          bookingData,
+          {
+            headers: {
+              "Content-Type": "appliacation/json",
+              Accept: "appliacation/json",
+              Authorization:
+                "Bearer Q1KZP9uRKHLWL6COiKCMD2mpnYNI7vopLEOJUvWM62sV6CQb0ht2EIedUHmD"
+            }
           }
-        })
-        dispatch('getRoomData', roomID)
+        );
+        commit("bookingResult", "success");
+        dispatch("getRoomData", roomID);
       } catch (error) {
-        console.log(error)
+        commit("bookingResult", "fail");
+        console.log(error);
       }
-
     }
   },
   modules: {}
