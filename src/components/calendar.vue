@@ -1,10 +1,6 @@
 <template>
   <div class="calendar">
-    <datepicker
-      :inline="true"
-      :language="language"
-      :disabled-dates="state.bookingDay"
-    ></datepicker>
+    <datepicker :inline="true" :language="language" :disabled-dates="state.bookingDay"></datepicker>
   </div>
 </template>
 
@@ -61,16 +57,24 @@ export default {
   components: {
     Datepicker
   },
-  // created() {
-  //   console.log(this.bookingDay);
-  // },
   computed: {
     // ...mapGetters(["getBookingData"]),
     state() {
       // console.log(this.bookingData);
       return {
         bookingDay: {
-          dates: this.bookingDay
+          dates: this.bookingDay,
+          customPredictor: function(date) {
+            const now = Date.now();
+            const totalSecondsADay = 60 * 60 * 24 * 1000;
+            const totalSecondaOfNityDays = totalSecondsADay * 90;
+            if (
+              new Date() >= date ||
+              date.getTime() > now + totalSecondaOfNityDays
+            ) {
+              return true;
+            }
+          }
         }
       };
     }
@@ -105,5 +109,6 @@ export default {
       );
     }
   }
-}</style
+}
+</style
 >>

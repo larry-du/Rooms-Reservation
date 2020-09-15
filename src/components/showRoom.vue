@@ -9,7 +9,7 @@
         <img :src="roomInfo[0].imageUrl[2]" alt />
       </div>
     </header>
-    <h1 class="logo" title="WhiteSpace">WhiteSpace</h1>
+    <h1 class="logo" title="WhiteSpace" @click="$router.push('/')">WhiteSpace</h1>
   </div>
 </template>
 
@@ -68,5 +68,6 @@ export default {
   position: absolute;
   top: 42px;
   left: 63px;
+  cursor: pointer;
 }
 </style>
