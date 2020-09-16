@@ -1,6 +1,10 @@
 <template>
   <div class="calendar">
-    <datepicker :inline="true" :language="language" :disabled-dates="state.bookingDay"></datepicker>
+    <datepicker
+      :inline="true"
+      :language="language"
+      :disabled-dates="state.bookingDay"
+    ></datepicker>
   </div>
 </template>
 
@@ -109,6 +113,5 @@ export default {
       );
     }
   }
-}
-</style
+}</style
 >>

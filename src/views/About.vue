@@ -1,14 +1,8 @@
 <template>
   <div class="about">
-    <showRoom
-      @open-light-box="openLightBox = true"
-      :roomInfo="getRoom"
-    ></showRoom>
+    <showRoom @open-light-box="openLightBox = true" :roomInfo="getRoom"></showRoom>
     <div class="reservation">
-      <detailRoomInfo
-        :roomInfo="getRoom"
-        class="detail_room_info"
-      ></detailRoomInfo>
+      <detailRoomInfo :roomInfo="getRoom" class="detail_room_info"></detailRoomInfo>
       <div class="room_price">
         <div class="nomal_price">
           <h2>NT.{{ getRoom[0].normalDayPrice }}</h2>
@@ -24,43 +18,39 @@
         <button @click="openBookingPage = true">預約時段</button>
       </div>
     </div>
-    <lightBox
-      v-show="openLightBox"
-      :roomInfo="getRoom"
-      @cancel-light-box="openLightBox = false"
-    ></lightBox>
+    <lightBox v-show="openLightBox" :roomInfo="getRoom" @cancel-light-box="openLightBox = false"></lightBox>
     <bookingPage
       v-show="openBookingPage"
       @update:order="booking = $event"
       @save-order="
-        saveToVuex(), (openBookingPage = false), (booking = resetData)
-      "
+        saveToVuex(), (openBookingPage = false), (booking = resetData),($store.commit('changeLoadingState',true))"
       @cancel-order="(booking = resetData), (openBookingPage = false)"
       :bookingData="booking"
       :roomInfo="getRoom"
       :bookingDay="getBookingDay"
     ></bookingPage>
-    <b-overlay :show="openBookingResultPage">
-      <reservationStatus
-        :receiveState="receiveState"
-        v-if="getReceiveState"
-        @reset-booking-result="$store.commit('resetBookingResult')"
-      >
-        <div class="receive" slot="receive">
-          <!-- <div class="receive_title">預約成功</div> -->
-          <div class="receive_state">
-            <font-awesome-icon
-              :icon="['far', 'check-circle']"
-              fixed-width
-              size="lg"
-              v-if="getReceiveState === 'success'"
-            />
-            <span v-if="getReceiveState === 'fail'">預約時間已被人預訂</span>
-          </div>
-          <!-- <button class="receive_button">回首頁</button> -->
+    <b-overlay :show="getIsLoading" class="position-fixed" :class="{position_middle:getIsLoading}"></b-overlay>
+    <reservationStatus
+      :receiveState="receiveState"
+      :getIsLoading="getIsLoading"
+      v-if="getReceiveState"
+      @reset-booking-result="$store.commit('resetBookingResult')"
+    >
+      <div class="receive" slot="receive">
+        <!-- <div class="receive_title">預約成功</div> -->
+        <div class="receive_state">
+          <font-awesome-icon
+            :icon="['far', 'check-circle']"
+            fixed-width
+            size="lg"
+            v-if="getReceiveState === 'success'"
+          />
+          <span v-if="getReceiveState === 'fail'">預約時間已被人預訂</span>
         </div>
-      </reservationStatus>
-    </b-overlay>
+        <!-- <button class="receive_button">回首頁</button> -->
+      </div>
+    </reservationStatus>
+    <!-- </b-overlay> -->
   </div>
 </template>
 
@@ -88,7 +78,7 @@ export default {
     return {
       openLightBox: null,
       openBookingPage: null,
-      openBookingResultPage: null,
+      // openBookingResultPage: null,
       booking: {}
     };
   },
@@ -119,7 +109,8 @@ export default {
       "getAllRooms",
       "getRoom",
       "getBookingDay",
-      "getReceiveState"
+      "getReceiveState",
+      "getIsLoading"
     ]),
     resetData() {
       return {
@@ -177,5 +168,11 @@ export default {
   & .holiday_price h3 {
     font-size: 16px;
   }
+}
+.position_middle {
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
 }
 </style>

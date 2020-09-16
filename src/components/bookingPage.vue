@@ -66,7 +66,9 @@
       </div>
       <div class="check_state">
         <button class="cancel" @click="cancelOrder">取消</button>
-        <button class="save" :disabled="isFormatError" @click="confirmBooking">確定預約</button>
+        <button class="save" :disabled="isFormatError" @click="confirmBooking">
+          確定預約
+        </button>
       </div>
     </div>
   </div>
@@ -430,6 +432,5 @@ export default {
   & button:disabled {
     background-color: $gray;
   }
-}
-</style
+}</style
 >>
