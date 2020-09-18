@@ -18,11 +18,11 @@ export default {
     receiveState: {
       type: Object,
       required: true
-    },
-    getIsLoading: {
-      type: Boolean,
-      required: true
     }
+    // getIsLoading: {
+    //   type: Boolean,
+    //   required: true
+    // }
   }
 };
 </script>

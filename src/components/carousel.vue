@@ -1,9 +1,5 @@
 <template>
-  <b-carousel
-    :interval="4000"
-    background="#ababab"
-    style="text-shadow: 1px 1px 2px #333;"
-  >
+  <b-carousel :interval="4000" background="#ababab" style="text-shadow: 1px 1px 2px #333;">
     <b-carousel-slide
       class="carousel_img"
       v-for="data in roomImage"
@@ -15,10 +11,12 @@
 
 <style lang="scss">
 .carousel_img img {
+  width: 100%;
   object-fit: cover;
   height: 660px;
-}</style
->>
+}
+</style
+>
 
 <script>
 export default {
