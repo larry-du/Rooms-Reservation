@@ -5,6 +5,8 @@
 3. fontAwesome - vue
 4. axios
 5. V-Calendar
+6. RWD
+
 ## 練習時間:
 約 2 週(code review、程式重構)
 
