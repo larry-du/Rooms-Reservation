@@ -3,10 +3,9 @@
     <div class="reservation_body">
       <div class="receive_title">{{ receiveState.title }}</div>
       <slot name="receive"></slot>
-      <button
-        class="receive_button"
-        @click="$emit('reset-booking-result')"
-      >{{ receiveState.buttonText }}</button>
+      <button class="receive_button" @click="$emit('reset-booking-result')">
+        {{ receiveState.buttonText }}
+      </button>
     </div>
   </div>
 </template>
@@ -19,10 +18,6 @@ export default {
       type: Object,
       required: true
     }
-    // getIsLoading: {
-    //   type: Boolean,
-    //   required: true
-    // }
   }
 };
 </script>

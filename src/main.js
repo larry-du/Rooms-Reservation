@@ -12,15 +12,11 @@ import "./assets/scss/reset/reset.scss";
 
 //fontAwesome
 import { library } from "@fortawesome/fontawesome-svg-core";
-// import { faInstagram, faFacebookSquare } from "@fortawesome/free-brands-svg-icons";
-
-// import VCalendar from 'v-calendar';
 import {
   FontAwesomeIcon,
   FontAwesomeLayers,
   FontAwesomeLayersText
 } from "@fortawesome/vue-fontawesome";
-// import { faAppleAlt } from "@fortawesome/free-solid-svg-icons";
 import {
   faInstagram,
   faFacebookSquare

@@ -10,7 +10,6 @@
 
 <script>
 import Datepicker from "vuejs-datepicker";
-// import { mapGetters } from "vuex";
 export default {
   name: "calendar",
   data() {
@@ -62,9 +61,7 @@ export default {
     Datepicker
   },
   computed: {
-    // ...mapGetters(["getBookingData"]),
     state() {
-      // console.log(this.bookingData);
       return {
         bookingDay: {
           dates: this.bookingDay,

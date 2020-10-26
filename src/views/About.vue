@@ -1,8 +1,14 @@
 <template>
   <div class="about">
-    <showRoom @open-light-box="openLightBox = true" :roomInfo="getRoom"></showRoom>
+    <showRoom
+      @open-light-box="openLightBox = true"
+      :roomInfo="getRoom"
+    ></showRoom>
     <div class="reservation">
-      <detailRoomInfo :roomInfo="getRoom" class="detail_room_info"></detailRoomInfo>
+      <detailRoomInfo
+        :roomInfo="getRoom"
+        class="detail_room_info"
+      ></detailRoomInfo>
       <div class="room_price">
         <div class="nomal_price">
           <h2>NT.{{ getRoom[0].normalDayPrice }}</h2>
@@ -18,18 +24,30 @@
         <button @click="openBookingPage = true">預約時段</button>
       </div>
     </div>
-    <lightBox v-show="openLightBox" :roomInfo="getRoom" @cancel-light-box="openLightBox = false"></lightBox>
+    <lightBox
+      v-show="openLightBox"
+      :roomInfo="getRoom"
+      @cancel-light-box="openLightBox = false"
+    ></lightBox>
     <bookingPage
       v-show="openBookingPage"
       @update:order="booking = $event"
       @save-order="
-        saveToVuex(), (openBookingPage = false), (booking = resetData),($store.commit('changeLoadingState',true))"
+        saveToVuex(),
+          (openBookingPage = false),
+          (booking = resetData),
+          $store.commit('changeLoadingState', true)
+      "
       @cancel-order="(booking = resetData), (openBookingPage = false)"
       :bookingData="booking"
       :roomInfo="getRoom"
       :bookingDay="getBookingDay"
     ></bookingPage>
-    <b-overlay :show="getIsLoading" class="position-fixed" :class="{position_middle:getIsLoading}"></b-overlay>
+    <b-overlay
+      :show="getIsLoading"
+      class="position-fixed"
+      :class="{ position_middle: getIsLoading }"
+    ></b-overlay>
     <reservationStatus
       :receiveState="receiveState"
       :getIsLoading="getIsLoading"
@@ -136,7 +154,9 @@ export default {
 <style lang="scss">
 .calendar_area {
   flex: 3 0 0;
-  margin-left: 37px;
+  @media (min-width: 576px) {
+    margin-left: 37px;
+  }
   & button {
     width: 118px;
     height: 53px;
@@ -158,6 +178,10 @@ export default {
 }
 .room_price {
   flex: 1 0 0;
+  margin-bottom: 30px;
+  @media (min-width: 768px) {
+    margin-bottom: 0;
+  }
   & span {
     font-size: $product-title-size;
     color: #6d7278;

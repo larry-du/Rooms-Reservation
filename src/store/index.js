@@ -1,9 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-// import axios from "axios";
 import API from "../api/api";
-// import state from "./state";
-// import getters from "./getters";
 
 Vue.use(Vuex);
 
@@ -20,11 +17,9 @@ export default new Vuex.Store({
       return state.isLoading;
     },
     getAllRooms(state) {
-      // console.log(state);
       return state.allRooms;
     },
     getRoom(state) {
-      // console.log(state);
       return state.room;
     },
     getBookingDay(state) {
@@ -53,9 +48,6 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    // saveBookingData({ commit }, bookingData) {
-    //   commit("createBookingData", bookingData);
-    // },
     async getAllRoomsApi({ commit }) {
       try {
         const response = await API.get("/rooms");
